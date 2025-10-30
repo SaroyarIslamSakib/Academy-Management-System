@@ -1,9 +1,12 @@
+using AMS.Application.Features.Students.Commands;
 using AMS.Domain;
 using AMS.Domain.Repositories;
 using AMS.Infrastructure;
 using AMS.Infrastructure.Data;
 using AMS.Infrastructure.Extensions;
 using AMS.Infrastructure.Repositories;
+using Cortex.Mediator.DependencyInjection;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -34,6 +37,19 @@ try
     #region Service Collection based Dependency Injection
     builder.Services.AddDependencyInjection();
     #endregion
+
+    #region Mediator Configuration
+    builder.Services.AddCortexMediator(
+        builder.Configuration,
+        new[] {typeof(Program), typeof(StudentAddCommand)},
+        options=> options.AddDefaultBehaviors()
+    );
+    #endregion
+
+    #region Mapster Configuration
+    builder.Services.AddMapster();
+    #endregion
+
     // Add services to the container.
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(connectionString, (x) => x.MigrationsAssembly(migrationAssembly)));
