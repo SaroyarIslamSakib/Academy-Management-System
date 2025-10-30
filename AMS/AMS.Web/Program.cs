@@ -1,4 +1,9 @@
+using AMS.Domain;
+using AMS.Domain.Repositories;
+using AMS.Infrastructure;
 using AMS.Infrastructure.Data;
+using AMS.Infrastructure.Extensions;
+using AMS.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
@@ -26,7 +31,9 @@ try
         .ReadFrom.Configuration(builder.Configuration)
     );
     #endregion
-
+    #region Service Collection based Dependency Injection
+    builder.Services.AddDependencyInjection();
+    #endregion
     // Add services to the container.
     builder.Services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(connectionString, (x) => x.MigrationsAssembly(migrationAssembly)));

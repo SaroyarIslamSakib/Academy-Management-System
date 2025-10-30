@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using AMS.Domain.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace AMS.Infrastructure.Data
@@ -9,5 +10,6 @@ namespace AMS.Infrastructure.Data
             : base(options)
         {
         }
+        public DbSet<Student> Students { get; set; }
     }
 }
